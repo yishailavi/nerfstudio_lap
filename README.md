@@ -1,34 +1,34 @@
-# nerfstudio-method-template
-Template repository for creating and registering methods in Nerfstudio.
-
-## File Structure
-We recommend the following file structure:
+## Install
+Please make sure you have conda / mamba installed on your system. Please run the following commands to install:
 
 ```
-├── my_method
-│   ├── __init__.py
-│   ├── my_config.py
-│   ├── custom_pipeline.py [optional]
-│   ├── custom_model.py [optional]
-│   ├── custom_field.py [optional]
-│   ├── custom_datamanger.py [optional]
-│   ├── custom_dataparser.py [optional]
-│   ├── ...
-├── pyproject.toml
-```
-
-## Registering with Nerfstudio
-Ensure that nerfstudio has been installed according to the [instructions](https://docs.nerf.studio/en/latest/quickstart/installation.html). Clone or fork this repository and run the commands:
-
-```
-conda activate nerfstudio
-cd nerfstudio-method-template/
+git clone https://github.com/yishailavi/nerfstudio_lap.git
+cd nerfstudio_lap
+mamba create -n nerfstudio_lap python=3.8 -y
+mamba activate nerfstudio_lap
 pip install -e .
+mamba install cuda-toolkit
+pip uninstall gsplat
+pip install git+https://github.com/nerfstudio-project/gsplat.git@v1.4.0 
 ns-install-cli
 ```
 
 ## Running the new method
-This repository creates a new Nerfstudio method named "method-template". To train with it, run the command:
+To train Frequency Aware Gaussian Splatting Decomposition on a scene, please run: 
 ```
-ns-train method-template --data [PATH]
+ns-train
+splatfacto_lap
+--pipeline.model.rasterize_mode
+antialiased
+--pipeline.model.num_laplacian_levels
+3
+--pipeline.model.add_level_every
+2500
+--pipeline.model.num_downscales
+0
+--pipeline.model.stop_split_at
+30000
+nerfstudio-data
+--data
+[PATH]
 ```
