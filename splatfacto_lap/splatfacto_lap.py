@@ -22,10 +22,8 @@ class SplatfactoModelLapConfig(SplatfactoModelConfig):
     add_level_every: int = 3000
     disable_refinement_length: int = 300
     gauss_loss_lambda: float = 1.
-    gauss_loss_fft_lambda: float = 0.2
-    lap_loss_lambda: float = 0.2
-    lap_loss_ssim_lambda: float = 0.8
-    lap_loss_fft_lambda: float = 0.2
+    lower_gauss_loss_lambda_factor: float = 0.1
+    gauss_loss_fft_lambda: float = 0.001
 
 
 class SplatfactoModelLap(SplatfactoModel):
@@ -545,7 +543,7 @@ class SplatfactoModelLap(SplatfactoModel):
             cur_gt_downsampled = downsample_antialias_n_times(gt_img, ker, num_downsamples)
             lm_gauss = self.config.gauss_loss_lambda
             if i < num_levels - 1:
-                lm_gauss *= 0.1
+                lm_gauss *= self.config.lower_gauss_loss_lambda_factor
             cur_pred_gauss_level_downsampled = cur_pred_gauss_level_downsampled.squeeze(0).permute(1, 2, 0)
             cur_gt_downsampled = cur_gt_downsampled.squeeze(0).permute(1, 2, 0)
             loss_dict[f"gaussian_loss_{str(i)}"] = self._get_image_loss(cur_gt_downsampled, cur_pred_gauss_level_downsampled) * lm_gauss
@@ -554,7 +552,7 @@ class SplatfactoModelLap(SplatfactoModel):
                 cur_gt_blurred = downsample_n_times_upsample_n_times(gt_img, num_downsamples).squeeze(0).permute(1, 2, 0)
                 cur_pred_gauss_level = cur_pred_gauss_level[:cur_gt_blurred.shape[0], :cur_gt_blurred.shape[1]]
                 loss_dict[f"gaussian_loss_{str(i)}_fft"] = self._get_fft_magnitude_loss(cur_gt_blurred,
-                                                                                        cur_pred_gauss_level) * 0.001
+                                                                                        cur_pred_gauss_level) * self.config.gauss_loss_fft_lambda
 
         assert "mask" not in batch, "masking is not supported at the moment"
 
