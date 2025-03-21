@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Frequency-Aware Gaussian Splatting Decomposition</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      max-width: 700px;
+      margin: 40px auto;
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      padding: 0 20px;
+    }
+    h1 {
+      font-size: 2em;
+      margin-bottom: 0.2em;
+    }
+    h2 {
+      font-size: 1.2em;
+      color: #555;
+      font-weight: normal;
+      margin-top: 0;
+    }
+    a {
+      color: #007acc;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .links a {
+      display: inline-block;
+      margin-right: 15px;
+    }
+    .footer {
+      margin-top: 3em;
+      font-size: 0.9em;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Frequency-Aware Gaussian Splatting Decomposition</h1>
+  <h2>Yishai Lavi, Leo Segre, Shai Avidan</h2>
+
+  <div class="links">
+    <a href="paper.pdf">[PDF]</a>
+    <a href="https://github.com/your-username/your-repo">[Code]</a>
+  </div>
+
+  <p><strong>Abstract:</strong></p>
+  <p>
+3D Gaussian Splatting (3D-GS) has revolutionized novel view synthesis with its efficient, explicit representation. However, it lacks frequency interpretability, making it difficult to separate low-frequency structures from fine details. We introduce a frequency-decomposed 3D-GS framework that groups 3D Gaussians that correspond to subbands in the Laplacian Pyrmaids of the input images.
+
+Our approach enforces coherence within each subband (i.e., group of 3D Gaussians) through dedicated regularization, ensuring well-separated frequency components. We extend color values to both positive and negative ranges, allowing higher-frequency layers to add or subtract residual details. To stabilize optimization, we employ a progressive training scheme that refines details in a coarse-to-fine manner.
+
+Beyond interpretability, this frequency-aware design unlocks a range of practical benefits. Explicit frequency separation enables advanced 3D editing and stylization, allowing precise manipulation of specific frequency bands. It also supports dynamic level-of-detail control for progressive rendering, streaming, foveated rendering and fast geometry interaction. Through extensive experiments, we demonstrate that our method provides improved control and flexibility for emerging applications in scene editing and interactive rendering.
+  </p>
+
+  <div class="footer">
+    © 2025 Yishai Lavi, Leo Segre, Shai Avidan. Tel Aviv University. Last updated March 2025.
+  </div>
+
+</body>
+</html>
