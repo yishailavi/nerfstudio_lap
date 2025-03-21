@@ -1,6 +1,9 @@
 # Frequency-Aware Gaussian Splatting Decomposition
-### [Project Page](#) | [Paper](#)
-By [Yishai Lavi](#), [Leo Segre](#), and [Shai Avidan](#)
+
+### [Project Page](https://yishailavi.github.io/nerfstudio_lap/) | [Paper]
+
+By [Yishai Lavi], [Leo Segre](https://scholar.google.com/citations?user=A7FWhoIAAAAJ&hl=iw), and [Shai Avidan](https://scholar.google.com/citations?user=hpItE1QAAAAJ&hl=en)
+
 
 This repository contains the official implementation of **Frequency-Aware Gaussian Splatting Decomposition**, presented in 2025.
 
