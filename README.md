@@ -7,8 +7,6 @@ By [Yishai Lavi](#), [Leo Segre](https://scholar.google.com/citations?user=A7FWh
 
 This repository contains the official implementation of **Frequency-Aware Gaussian Splatting Decomposition**, presented in 2025.
 
-![Placeholder screenshot](https://user-images.githubusercontent.com/.../placeholder_screenshot.png)
-
 ## Citation
 If you find this repository useful, please cite our work:
 
