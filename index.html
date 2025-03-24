@@ -303,7 +303,7 @@
     <div class="authors">
       Yishai Lavi, Leo Segre, Shai Avidan
     </div>
-    <div class="affiliation">Tel Aviv University</div>
+    <div class="affiliation">Tel Aviv University, 2025</div>
     <div class="icon-links">
       <!-- Replace these icons with your own or remove them if you prefer text only -->
       <a href="paper.pdf">
@@ -326,9 +326,6 @@
   <!-- ========== ABSTRACT ========== -->
   <section class="section" id="abstract">
     <h2 class="section-title">Abstract</h2>
-    <p class="section-intro">
-      [Short introduction or instructions here. This text is placed below the section header and above the main content. Feel free to modify or remove.]
-    </p>
     <p>
       3D Gaussian Splatting (3D-GS) has revolutionized novel view synthesis with its efficient, explicit representation. However, it lacks frequency interpretability, making it difficult to separate low-frequency structures from fine details. We introduce a frequency-decomposed 3D-GS framework that groups 3D Gaussians that correspond to subbands in the Laplacian Pyrmaids of the input images.
     </p>
@@ -344,7 +341,7 @@
   <section class="section" id="lod">
     <h2 class="section-title">Level of Detail</h2>
     <p class="section-intro">
-      [Placeholder text explaining the Level of Detail section. Replace or remove as needed.]
+      Our frequency-aware decomposition enables progressive Level of Detail (LOD) rendering, where low-frequency Gaussians capture coarse geometry and appearance, and higher levels progressively refine the image with finer details.
     </p>
     <div class="container">
       <div class="compare-row">
@@ -408,7 +405,7 @@
   <section class="section" id="laplacian">
     <h2 class="section-title">Laplacian Levels</h2>
     <p class="section-intro">
-      [Placeholder text explaining the Laplacian Levels section. Replace or remove as needed.]
+      By grouping Gaussians according to Laplacian pyramid subbands, we isolate and visualize distinct frequency components of a scene, revealing how each level contributes to the final image structure.
     </p>
     <div class="container">
       <div class="compare-row">
@@ -468,31 +465,21 @@
     </div>
   </section>
 
-  <!-- ========== FAST GEOMETRY INTERACTION ========== -->
-  <section class="section" id="fast-geometry">
-    <h2 class="section-title">Fast Geometry Interaction</h2>
-    <p class="section-intro">
-      [Placeholder text describing the fast geometry interaction. Replace or remove as needed.]
-    </p>
-    <!-- Placeholder image: replace with your real image -->
-    <img src="fast_geometry_placeholder.jpg" alt="Fast Geometry Interaction" class="placeholder">
-  </section>
-
   <!-- ========== FOVEATED RENDERING ========== -->
   <section class="section" id="foveated-rendering">
     <h2 class="section-title">Foveated Rendering</h2>
     <p class="section-intro">
-      [Placeholder text describing the foveated rendering. Replace or remove as needed.]
+      Our model supports real-time foveated rendering by concentrating high-frequency details in the user’s gaze region, reducing rendering cost in the periphery without compromising perceptual quality.
     </p>
     <!-- Placeholder image: replace with your real image -->
-    <img src="foveated_rendering_placeholder.jpg" alt="Foveated Rendering" class="placeholder">
+    <img src="img/foveated_rendering.png" alt="Foveated Rendering" style="width: 100%; height: auto; display: block; margin: 0 auto;">
   </section>
 
   <!-- ========== ARTISTIC FILTERS ========== -->
   <section class="section" id="artistic-filters">
     <h2 class="section-title">Artistic Filters</h2>
     <p class="section-intro">
-      [Placeholder text describing the artistic filters. Replace or remove as needed.]
+      Manipulating frequency-specific Gaussian groups enables stylized effects such as X-ray or painterly rendering, while preserving 3D consistency and coherence across viewpoints.
     </p>
     <div class="container">
       <div class="compare-row">
@@ -540,7 +527,7 @@
   <section class="section" id="3d-editing">
     <h2 class="section-title">3D Editing</h2>
     <p class="section-intro">
-      [Placeholder text describing the 3D editing. Replace or remove as needed.]
+      Frequency-aware decomposition allows selective object editing based on text prompts by preserving only relevant high-frequency Gaussians, enabling multi-view-consistent object highlighting or suppression.
     </p>
     <div class="container">
       <div class="compare-row">
@@ -578,6 +565,16 @@
         </div>
       </div>
     </div>
+  </section>
+
+  <!-- ========== FAST GEOMETRY INTERACTION ========== -->
+  <section class="section" id="fast-geometry">
+    <h2 class="section-title">Fast Geometry Interaction</h2>
+    <p class="section-intro">
+      Operating on only the low-frequency Gaussians enables faster geometric queries and interactions, such as collision detection or spatial search, while maintaining structural fidelity.
+    </p>
+    <!-- Placeholder image: replace with your real image -->
+    <img src="img/fast_geometry.png" alt="Fast Geometry Interaction" style="width: 55%; height: auto; display: block; margin: 0 auto;">
   </section>
 
   <!-- ========== CITATION ========== -->
