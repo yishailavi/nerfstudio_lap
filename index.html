@@ -4,23 +4,23 @@
   <meta charset="UTF-8">
   <title>Frequency-Aware Gaussian Splatting Decomposition</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <style>
+    /* -------------------------
+       GLOBAL + HEADER STYLES
+    ------------------------- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
     body {
-      max-width: 700px;
-      margin: 40px auto;
       font-family: Arial, sans-serif;
-      line-height: 1.6;
-      padding: 0 20px;
-    }
-    h1 {
-      font-size: 2em;
-      margin-bottom: 0.2em;
-    }
-    h2 {
-      font-size: 1.2em;
-      color: #555;
-      font-weight: normal;
-      margin-top: 0;
+      background-color: #fafafa;
+      color: #333;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 15px 60px;
     }
     a {
       color: #007acc;
@@ -29,42 +29,630 @@
     a:hover {
       text-decoration: underline;
     }
-    .links a {
-      display: inline-block;
-      margin-right: 15px;
+
+    /* Hero / top banner styling */
+    .hero {
+      text-align: center;
+      padding: 40px 0 30px;
     }
-    .footer {
-      margin-top: 3em;
-      font-size: 0.9em;
+    .hero h1 {
+      font-size: 2.2em;
+      font-weight: 400;
+      margin-bottom: 15px;
+    }
+    .authors {
+      font-size: 1.1em;
+      color: #666;
+      margin-bottom: 5px;
+    }
+    .affiliation {
+      font-size: 1em;
       color: #888;
+      margin-bottom: 20px;
+    }
+    .icon-links {
+      display: inline-flex;
+      gap: 30px;
+      margin-bottom: 0;
+      align-items: center;
+      justify-content: center;
+    }
+    .icon-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #333;
+      font-weight: bold;
+      text-decoration: none;
+      border: 1px solid #ccc;
+      padding: 6px 14px;
+      border-radius: 4px;
+      background: #fff;
+    }
+    .icon-links a:hover {
+      background: #f0f0f0;
+    }
+    .icon-links img {
+      height: 20px;
+      width: auto;
+    }
+
+    /* Teaser figure styling */
+    .teaser-figure {
+      text-align: center;
+      margin: 20px 0 30px;
+    }
+    .teaser-img {
+      max-width: 100%;
+      border-radius: 8px;
+    }
+
+    /* Section titles */
+    .section {
+      margin-bottom: 50px;
+    }
+    .section-title {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+      font-weight: 600;
+      color: #444;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 6px;
+      margin-top: 30px;
+    }
+    .section-intro {
+      margin: 10px 0 20px;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    /* Container for video comparisons or images */
+    .container {
+      width: 100%;
+      max-width: 2000px;
+      margin: 20px auto;
+    }
+
+    /* -------------------------
+       VIDEO COMPARISON STYLES
+    ------------------------- */
+    .compare-row {
+      display: flex;
+      flex-wrap: nowrap;   /* no wrapping - side-by-side, scroll horizontally if narrow */
+      gap: 20px;
+      justify-content: center;
+      overflow-x: auto;
+      margin-bottom: 30px;
+      padding-bottom: 10px;
+    }
+    .compare-block {
+      flex: 0 0 calc(50% - 10px);
+      background: #fff;
+      border: 2px solid #ccc;
+      margin: 0 auto;
+      min-width: 350px;  /* ensures a minimum width if screen is small */
+    }
+    .block-title {
+      background: #eee;
+      padding: 10px;
+      margin: 0;
+      text-align: center;
+      font-size: 1rem;
+      font-weight: bold;
+      border-bottom: 2px solid #ccc;
+      line-height: 1.3;
+    }
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+    }
+    video {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+
+    /* Layers for 3-video or 2-video comparisons */
+    .vid-bg, .vid-mid, .vid-top,
+    .vid-bg2, .vid-top2 {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+    }
+    .vid-bg  { z-index: 1; }
+    .vid-mid { z-index: 2; }
+    .vid-top { z-index: 3; }
+    .vid-bg2 { z-index: 1; }
+    .vid-top2 { z-index: 2; }
+
+    /* Slider bars */
+    .slider-bar {
+      position: absolute;
+      top: 0;
+      width: 4px;
+      height: 100%;
+      background: #333;
+      z-index: 100;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    .slider-half-left,
+    .slider-half-right,
+    .slider-container-2way {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      pointer-events: none;
+    }
+    .slider-half-left {
+      left: 0; width: 50%;
+    }
+    .slider-half-right {
+      right: 0; width: 50%;
+    }
+    .slider-half-left input[type="range"],
+    .slider-half-right input[type="range"] {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      opacity: 0;
+      pointer-events: all;
+      cursor: ew-resize;
+    }
+    .slider-container-2way {
+      left: 0; width: 100%;
+    }
+    .slider-container-2way input[type="range"] {
+      position: absolute;
+      width: 100%; height: 100%;
+      opacity: 0;
+      pointer-events: all;
+      cursor: ew-resize;
+    }
+
+    /* Labels inside each video block */
+    .label3-bg, .label3-mid, .label3-top,
+    .label2-bg, .label2-top {
+      position: absolute;
+      top: 10px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      font-weight: bold;
+      color: #000;
+      background: rgba(255,255,255,0.7);
+      pointer-events: none;
+    }
+    .label3-bg  { left: 10px; }
+    .label3-mid { left: 50%; transform: translateX(-50%); }
+    .label3-top { right: 10px; }
+    .label2-bg  { left: 10px; }
+    .label2-top { right: 10px; }
+
+    /* Placeholder images for Fast Geometry & Foveated Rendering */
+    .placeholder {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      border: 2px dashed #ccc;
+      border-radius: 8px;
+      margin-top: 20px;
+      display: block;
+    }
+
+    /* -------------------------
+       CITATION (BibTeX) STYLES
+    ------------------------- */
+    .citation {
+      margin-top: 50px;
+    }
+    .citation-title {
+      font-size: 1.3em;
+      font-weight: 600;
+      margin-bottom: 10px;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 6px;
+      color: #444;
+    }
+    .bibtex-snippet {
+      position: relative;
+      background: #f5f5f5;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 10px;
+      font-family: Consolas, monospace;
+      font-size: 0.9em;
+      margin-bottom: 10px;
+      overflow: auto;
+      line-height: 1.4;
+      white-space: pre; /* preserve spacing */
+    }
+    /* Optional: add a "copy" button if you like */
+    .copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 3px 8px;
+      font-size: 0.8em;
+      cursor: pointer;
+    }
+    .copy-btn:hover {
+      background: #f0f0f0;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      margin-top: 60px;
+      color: #999;
+      font-size: 0.85em;
     }
   </style>
 </head>
 <body>
 
-  <h1>Frequency-Aware Gaussian Splatting Decomposition</h1>
-  <h2>Yishai Lavi, Leo Segre, Shai Avidan</h2>
+  <!-- ========== TOP HERO SECTION ========== -->
+  <header class="hero">
+    <h1>Frequency-Aware Gaussian Splatting Decomposition</h1>
+    <div class="authors">
+      Yishai Lavi, Leo Segre, Shai Avidan
+    </div>
+    <div class="affiliation">Tel Aviv University</div>
+    <div class="icon-links">
+      <!-- Replace these icons with your own or remove them if you prefer text only -->
+      <a href="paper.pdf">
+        <img src="img/arxiv.png" alt="arxiv">
+        <span>Paper</span>
+      </a>
+      <a href="https://github.com/yishailavi/nerfstudio_lap/tree/main">
+        <img src="img/github.png" alt="github">
+        <span>Code</span>
+      </a>
+    </div>
+  </header>
 
-<!-- Add teaser image here -->
-<img src="teaser_figure.jpg" alt="Teaser Image" style="width:100%; max-width:100%; border-radius: 8px; margin-top: 20px;">
-
-<div class="links">
-  <a href="paper.pdf">[PDF]</a>
-  <a href="https://github.com/yishailavi/nerfstudio_lap/tree/main">[Code]</a>
-</div>
-
-  <p><strong>Abstract:</strong></p>
-  <p>
-3D Gaussian Splatting (3D-GS) has revolutionized novel view synthesis with its efficient, explicit representation. However, it lacks frequency interpretability, making it difficult to separate low-frequency structures from fine details. We introduce a frequency-decomposed 3D-GS framework that groups 3D Gaussians that correspond to subbands in the Laplacian Pyrmaids of the input images.
-
-Our approach enforces coherence within each subband (i.e., group of 3D Gaussians) through dedicated regularization, ensuring well-separated frequency components. We extend color values to both positive and negative ranges, allowing higher-frequency layers to add or subtract residual details. To stabilize optimization, we employ a progressive training scheme that refines details in a coarse-to-fine manner.
-
-Beyond interpretability, this frequency-aware design unlocks a range of practical benefits. Explicit frequency separation enables advanced 3D editing and stylization, allowing precise manipulation of specific frequency bands. It also supports dynamic level-of-detail control for progressive rendering, streaming, foveated rendering and fast geometry interaction. Through extensive experiments, we demonstrate that our method provides improved control and flexibility for emerging applications in scene editing and interactive rendering.
-  </p>
-
-  <div class="footer">
-    © 2025 Yishai Lavi, Leo Segre, Shai Avidan. Tel Aviv University. Last updated March 2025.
+  <!-- ========== TEASER FIGURE ========== -->
+  <div class="teaser-figure">
+    <!-- Replace "teaser_figure.jpg" with your actual teaser image file -->
+    <img src="img/teaser_figure.jpg" alt="Teaser Figure" class="teaser-img">
   </div>
+
+  <!-- ========== ABSTRACT ========== -->
+  <section class="section" id="abstract">
+    <h2 class="section-title">Abstract</h2>
+    <p class="section-intro">
+      [Short introduction or instructions here. This text is placed below the section header and above the main content. Feel free to modify or remove.]
+    </p>
+    <p>
+      3D Gaussian Splatting (3D-GS) has revolutionized novel view synthesis with its efficient, explicit representation. However, it lacks frequency interpretability, making it difficult to separate low-frequency structures from fine details. We introduce a frequency-decomposed 3D-GS framework that groups 3D Gaussians that correspond to subbands in the Laplacian Pyrmaids of the input images.
+    </p>
+    <p>
+      Our approach enforces coherence within each subband (i.e., group of 3D Gaussians) through dedicated regularization, ensuring well-separated frequency components. We extend color values to both positive and negative ranges, allowing higher-frequency layers to add or subtract residual details. To stabilize optimization, we employ a progressive training scheme that refines details in a coarse-to-fine manner.
+    </p>
+    <p>
+      Beyond interpretability, this frequency-aware design unlocks a range of practical benefits. Explicit frequency separation enables advanced 3D editing and stylization, allowing precise manipulation of specific frequency bands. It also supports dynamic level-of-detail control for progressive rendering, streaming, foveated rendering and fast geometry interaction. Through extensive experiments, we demonstrate that our method provides improved control and flexibility for emerging applications in scene editing and interactive rendering.
+    </p>
+  </section>
+
+  <!-- ========== LEVEL OF DETAIL ========== -->
+  <section class="section" id="lod">
+    <h2 class="section-title">Level of Detail</h2>
+    <p class="section-intro">
+      [Placeholder text explaining the Level of Detail section. Replace or remove as needed.]
+    </p>
+    <div class="container">
+      <div class="compare-row">
+        <!-- #1 Kitchen LOD -->
+        <div class="compare-block" id="compare3A">
+          <div class="block-title">Kitchen scene - Level Of Detail</div>
+          <div class="video-wrapper">
+            <div class="vid-bg">
+              <video src="kitchen_videos/kitchen_lod_1_fixed.mp4" autoplay loop muted></video>
+              <div class="label3-bg">L1</div>
+            </div>
+            <div class="vid-mid" id="compare3A_mid">
+              <video src="kitchen_videos/kitchen_lod_2_fixed.mp4" autoplay loop muted></video>
+              <div class="label3-mid">L1 + L2</div>
+            </div>
+            <div class="vid-top" id="compare3A_top">
+              <video src="kitchen_videos/kitchen_lod_3_fixed.mp4" autoplay loop muted></video>
+              <div class="label3-top">L1 + L2 + L3</div>
+            </div>
+            <div class="slider-bar" id="compare3A_bar1"></div>
+            <div class="slider-bar" id="compare3A_bar2"></div>
+            <div class="slider-half-left">
+              <input type="range" id="compare3A_slider1" min="0" max="50" value="25">
+            </div>
+            <div class="slider-half-right">
+              <input type="range" id="compare3A_slider2" min="50" max="100" value="75">
+            </div>
+          </div>
+        </div>
+        <!-- #2 Garden LOD -->
+        <div class="compare-block" id="compare3B">
+          <div class="block-title">Garden scene - Level Of Detail</div>
+          <div class="video-wrapper">
+            <div class="vid-bg">
+              <video src="garden_videos/garden_lod_1_fixed.mp4" autoplay loop muted></video>
+              <div class="label3-bg">L1</div>
+            </div>
+            <div class="vid-mid" id="compare3B_mid">
+              <video src="garden_videos/garden_lod_2_fixed.mp4" autoplay loop muted></video>
+              <div class="label3-mid">L1 + L2</div>
+            </div>
+            <div class="vid-top" id="compare3B_top">
+              <video src="garden_videos/garden_lod_3_fixed.mp4" autoplay loop muted></video>
+              <div class="label3-top">L1 + L2 + L3</div>
+            </div>
+            <div class="slider-bar" id="compare3B_bar1"></div>
+            <div class="slider-bar" id="compare3B_bar2"></div>
+            <div class="slider-half-left">
+              <input type="range" id="compare3B_slider1" min="0" max="50" value="25">
+            </div>
+            <div class="slider-half-right">
+              <input type="range" id="compare3B_slider2" min="50" max="100" value="75">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== LAPLACIAN LEVELS ========== -->
+  <section class="section" id="laplacian">
+    <h2 class="section-title">Laplacian Levels</h2>
+    <p class="section-intro">
+      [Placeholder text explaining the Laplacian Levels section. Replace or remove as needed.]
+    </p>
+    <div class="container">
+      <div class="compare-row">
+        <!-- #3 Kitchen Laplacian -->
+        <div class="compare-block" id="compare3C">
+          <div class="block-title">Kitchen scene - Laplacian Levels</div>
+          <div class="video-wrapper">
+            <div class="vid-bg">
+              <video src="kitchen_videos/kitchen_lod_1_fixed.mp4" autoplay loop muted></video>
+              <div class="label3-bg">L1</div>
+            </div>
+            <div class="vid-mid" id="compare3C_mid">
+              <video src="kitchen_videos/kitchen_lap_1_fixed.mp4" autoplay loop muted></video>
+              <div class="label3-mid">L2</div>
+            </div>
+            <div class="vid-top" id="compare3C_top">
+              <video src="kitchen_videos/kitchen_lap_2_fixed.mp4" autoplay loop muted></video>
+              <div class="label3-top">L3</div>
+            </div>
+            <div class="slider-bar" id="compare3C_bar1"></div>
+            <div class="slider-bar" id="compare3C_bar2"></div>
+            <div class="slider-half-left">
+              <input type="range" id="compare3C_slider1" min="0" max="50" value="25">
+            </div>
+            <div class="slider-half-right">
+              <input type="range" id="compare3C_slider2" min="50" max="100" value="75">
+            </div>
+          </div>
+        </div>
+        <!-- #4 Garden Laplacian -->
+        <div class="compare-block" id="compare3D">
+          <div class="block-title">Garden scene - Laplacian Levels</div>
+          <div class="video-wrapper">
+            <div class="vid-bg">
+              <video src="garden_videos/garden_lod_1_fixed.mp4" autoplay loop muted></video>
+              <div class="label3-bg">L1</div>
+            </div>
+            <div class="vid-mid" id="compare3D_mid">
+              <video src="garden_videos/garden_lap_1_fixed.mp4" autoplay loop muted></video>
+              <div class="label3-mid">L2</div>
+            </div>
+            <div class="vid-top" id="compare3D_top">
+              <video src="garden_videos/garden_lap_2_fixed.mp4" autoplay loop muted></video>
+              <div class="label3-top">L3</div>
+            </div>
+            <div class="slider-bar" id="compare3D_bar1"></div>
+            <div class="slider-bar" id="compare3D_bar2"></div>
+            <div class="slider-half-left">
+              <input type="range" id="compare3D_slider1" min="0" max="50" value="25">
+            </div>
+            <div class="slider-half-right">
+              <input type="range" id="compare3D_slider2" min="50" max="100" value="75">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FAST GEOMETRY INTERACTION ========== -->
+  <section class="section" id="fast-geometry">
+    <h2 class="section-title">Fast Geometry Interaction</h2>
+    <p class="section-intro">
+      [Placeholder text describing the fast geometry interaction. Replace or remove as needed.]
+    </p>
+    <!-- Placeholder image: replace with your real image -->
+    <img src="fast_geometry_placeholder.jpg" alt="Fast Geometry Interaction" class="placeholder">
+  </section>
+
+  <!-- ========== FOVEATED RENDERING ========== -->
+  <section class="section" id="foveated-rendering">
+    <h2 class="section-title">Foveated Rendering</h2>
+    <p class="section-intro">
+      [Placeholder text describing the foveated rendering. Replace or remove as needed.]
+    </p>
+    <!-- Placeholder image: replace with your real image -->
+    <img src="foveated_rendering_placeholder.jpg" alt="Foveated Rendering" class="placeholder">
+  </section>
+
+  <!-- ========== ARTISTIC FILTERS ========== -->
+  <section class="section" id="artistic-filters">
+    <h2 class="section-title">Artistic Filters</h2>
+    <p class="section-intro">
+      [Placeholder text describing the artistic filters. Replace or remove as needed.]
+    </p>
+    <div class="container">
+      <div class="compare-row">
+        <!-- #5 Kitchen - 2-video (Artistic) -->
+        <div class="compare-block" id="compare2A">
+          <div class="block-title">Kitchen scene - Artistic Filters</div>
+          <div class="video-wrapper">
+            <div class="vid-bg2">
+              <video src="kitchen_videos/kitchen_desk_mat_focus4_fixed.mp4" autoplay loop muted></video>
+              <div class="label2-bg">Desk Mat</div>
+            </div>
+            <div class="vid-top2" id="compare2A_top">
+              <video src="kitchen_videos/kitchen_lego_focus5_fixed.mp4" autoplay loop muted></video>
+              <div class="label2-top">Lego</div>
+            </div>
+            <div class="slider-bar" id="compare2A_bar"></div>
+            <div class="slider-container-2way">
+              <input type="range" id="compare2A_slider" min="0" max="100" value="50">
+            </div>
+          </div>
+        </div>
+        <!-- #6 Garden - 2-video (Artistic) -->
+        <div class="compare-block" id="compare2B">
+          <div class="block-title">Garden scene - Artistic Filters</div>
+          <div class="video-wrapper">
+            <div class="vid-bg2">
+              <video src="garden_videos/garden_table_focus4_fixed.mp4" autoplay loop muted></video>
+              <div class="label2-bg">Wooden Table</div>
+            </div>
+            <div class="vid-top2" id="compare2B_top">
+              <video src="garden_videos/garden_vase_focus_fixed.mp4" autoplay loop muted></video>
+              <div class="label2-top">Dried palm leaf arrangement in a round vase</div>
+            </div>
+            <div class="slider-bar" id="compare2B_bar"></div>
+            <div class="slider-container-2way">
+              <input type="range" id="compare2B_slider" min="0" max="100" value="50">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 3D EDITING ========== -->
+  <section class="section" id="3d-editing">
+    <h2 class="section-title">3D Editing</h2>
+    <p class="section-intro">
+      [Placeholder text describing the 3D editing. Replace or remove as needed.]
+    </p>
+    <div class="container">
+      <div class="compare-row">
+        <!-- #7 Kitchen - Xray Effect -->
+        <div class="compare-block" id="compare2C">
+          <div class="block-title">Kitchen scene - 3D Editing (Xray Effect)</div>
+          <div class="video-wrapper">
+            <div class="vid-bg2">
+              <video src="kitchen_videos/kitchen_lod_3_fixed.mp4" autoplay loop muted></video>
+            </div>
+            <div class="vid-top2" id="compare2C_top">
+              <video src="kitchen_videos/kitchen_xray_effect_fixed.mp4" autoplay loop muted></video>
+            </div>
+            <div class="slider-bar" id="compare2C_bar"></div>
+            <div class="slider-container-2way">
+              <input type="range" id="compare2C_slider" min="0" max="100" value="50">
+            </div>
+          </div>
+        </div>
+        <!-- #8 Garden - Brush Effect -->
+        <div class="compare-block" id="compare2D">
+          <div class="block-title">Garden scene - 3D Editing (Brush Effect)</div>
+          <div class="video-wrapper">
+            <div class="vid-bg2">
+              <video src="garden_videos/garden_lod_3_fixed.mp4" autoplay loop muted></video>
+            </div>
+            <div class="vid-top2" id="compare2D_top">
+              <video src="garden_videos/garden_brush_effect_fixed.mp4" autoplay loop muted></video>
+            </div>
+            <div class="slider-bar" id="compare2D_bar"></div>
+            <div class="slider-container-2way">
+              <input type="range" id="compare2D_slider" min="0" max="100" value="50">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CITATION ========== -->
+  <section class="citation" id="citation">
+    <h2 class="citation-title">Citation</h2>
+    <div class="bibtex-snippet">
+@article{lavi2025frequency,
+  title={Frequency-Aware Gaussian Splatting Decomposition},
+  author={Yishai Lavi and Leo Segre and Shai Avidan},
+  journal={To be published},
+  year={2025}
+}
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer>
+    © 2025 Yishai Lavi, Leo Segre, Shai Avidan. Tel Aviv University. Last updated March 2025.
+  </footer>
+
+  <!-- ========== JAVASCRIPT FOR SLIDERS ========== -->
+  <script>
+    // TWO-VIDEO COMPARISONS (single slider)
+    function initTwoVideoCompare(prefix) {
+      const slider = document.getElementById(prefix + '_slider');
+      const overlayTop = document.getElementById(prefix + '_top');
+      const bar = document.getElementById(prefix + '_bar');
+
+      function update() {
+        const val = parseInt(slider.value, 10);
+        overlayTop.style.clipPath = `inset(0 0 0 ${val}%)`;
+        bar.style.left = val + '%';
+      }
+      slider.addEventListener('input', update);
+      update();
+    }
+
+    // THREE-VIDEO COMPARISONS (two sliders)
+    function initThreeVideoCompare(prefix) {
+      const s1 = document.getElementById(prefix + '_slider1');
+      const s2 = document.getElementById(prefix + '_slider2');
+      const mid = document.getElementById(prefix + '_mid');
+      const top = document.getElementById(prefix + '_top');
+      const bar1 = document.getElementById(prefix + '_bar1');
+      const bar2 = document.getElementById(prefix + '_bar2');
+
+      function update() {
+        let val1 = parseInt(s1.value, 10);
+        let val2 = parseInt(s2.value, 10);
+        if (val1 >= val2) {
+          val1 = val2 - 1;
+          s1.value = val1;
+        }
+        mid.style.clipPath = `inset(0 ${100 - val2}% 0 ${val1}%)`;
+        top.style.clipPath = `inset(0 0 0 ${val2}%)`;
+        bar1.style.left = val1 + '%';
+        bar2.style.left = val2 + '%';
+      }
+      s1.addEventListener('input', update);
+      s2.addEventListener('input', update);
+      update();
+    }
+
+    // Init all 3-video comparisons
+    initThreeVideoCompare('compare3A');
+    initThreeVideoCompare('compare3B');
+    initThreeVideoCompare('compare3C');
+    initThreeVideoCompare('compare3D');
+
+    // Init all 2-video comparisons
+    initTwoVideoCompare('compare2A');
+    initTwoVideoCompare('compare2B');
+    initTwoVideoCompare('compare2C');
+    initTwoVideoCompare('compare2D');
+  </script>
 
 </body>
 </html>
