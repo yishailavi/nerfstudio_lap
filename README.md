@@ -11,11 +11,14 @@ This repository contains the official implementation of **Frequency-Aware Gaussi
 If you find this repository useful, please cite our work:
 
 ~~~bibtex
-@article{lavi2025frequency,
-  title={Frequency-Aware Gaussian Splatting Decomposition},
-  author={Yishai Lavi and Leo Segre and Shai Avidan},
-  journal={To be published},
-  year={2025}
+@misc{lavi2025frequencyawaregaussiansplattingdecomposition,
+      title={Frequency-Aware Gaussian Splatting Decomposition}, 
+      author={Yishai Lavi and Leo Segre and Shai Avidan},
+      year={2025},
+      eprint={2503.21226},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2503.21226}, 
 }
 ~~~
 
