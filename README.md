@@ -1,6 +1,6 @@
 # Frequency-Aware Gaussian Splatting Decomposition
 
-### [Project Page](https://yishailavi.github.io/nerfstudio_lap/) | [Paper](#)
+### [Project Page](https://yishailavi.github.io/nerfstudio_lap/) | [Paper](https://arxiv.org/abs/2503.21226)
 
 By [Yishai Lavi](#), [Leo Segre](https://scholar.google.com/citations?user=A7FWhoIAAAAJ&hl=iw), and [Shai Avidan](https://scholar.google.com/citations?user=hpItE1QAAAAJ&hl=en)
 
