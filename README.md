@@ -5,7 +5,7 @@
 
 ### [Project Page](https://yishailavi.github.io/nerfstudio_lap/) | [Paper](https://arxiv.org/abs/2503.21226)
 
-By [Yishai Lavi](#), [Leo Segre](https://scholar.google.com/citations?user=A7FWhoIAAAAJ&hl=iw), and [Shai Avidan](https://scholar.google.com/citations?user=hpItE1QAAAAJ&hl=en)
+By [Yishai Lavi](https://scholar.google.com/citations?user=FDV9vGYAAAAJ&hl=iw), [Leo Segre](https://scholar.google.com/citations?user=A7FWhoIAAAAJ&hl=iw), and [Shai Avidan](https://scholar.google.com/citations?user=hpItE1QAAAAJ&hl=en)
 
 This repository contains the **official implementation** of **Frequency-Aware Gaussian Splatting Decomposition**,  
 accepted to the **International Conference on 3D Vision (3DV), 2026**.
