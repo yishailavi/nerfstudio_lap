@@ -1,11 +1,14 @@
 # Frequency-Aware Gaussian Splatting Decomposition
 
+![Conference](https://img.shields.io/badge/3DV-2026-blue)
+![Status](https://img.shields.io/badge/Status-Accepted-success)
+
 ### [Project Page](https://yishailavi.github.io/nerfstudio_lap/) | [Paper](https://arxiv.org/abs/2503.21226)
 
 By [Yishai Lavi](#), [Leo Segre](https://scholar.google.com/citations?user=A7FWhoIAAAAJ&hl=iw), and [Shai Avidan](https://scholar.google.com/citations?user=hpItE1QAAAAJ&hl=en)
 
-
-This repository contains the official implementation of **Frequency-Aware Gaussian Splatting Decomposition**, presented in 2025.
+This repository contains the **official implementation** of **Frequency-Aware Gaussian Splatting Decomposition**,  
+accepted to the **International Conference on 3D Vision (3DV), 2026**.
 
 ## Citation
 If you find this repository useful, please cite our work:
